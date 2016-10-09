@@ -29,71 +29,15 @@
 
     <div id="map" style="width: 80%; height: 500px; margin: auto; margin-top: 75px;"></div>
 </body>
+<%= javascript_include_tag 'map.js' %>
 <script>
-    function myMap() {
-        var mapCanvas = document.getElementById("map");
-        var mapOptions = {
+    function initialize() {
+        var options = {
             center: new google.maps.LatLng(40.691, -75.214),
             zoom: 13
         };
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-
-        console.log('Getting points...');
-        //placeMarkers(map, getMarkersFromDB());
-        getMarkersFromDB(placeMarkers, map)
-        console.log('Got points');
-
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(map, event.latLng);
-            insertMarkerToDB(event.latLng, 'test');
-        });
-
-        function placeMarkers(map, points) {
-            console.log('placeMarkers() called with # points = ' + points.length);
-            points.forEach(function(point) {
-                console.log('placing point: ' + JSON.stringify(point));
-                var location = {
-                    lat: Number(point.latitude),
-                    lng: Number(point.longitude)
-                };
-                console.log('placing at location: ' + location);
-                placeMarker(map, location);
-            });
-        }
-
-        function placeMarker(map, location) {
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        }
-
-        function insertMarkerToDB(location, name) {
-            $.ajax({
-                type: 'GET',
-                url: '/MapPoint/create.json',
-                data: {
-                    latitude: location.lat,
-                    longitude: location.lng,
-                    name: name
-                },
-                success: function(data) {
-                    console.log('RESULT: ' + JSON.stringify(data));
-                }
-            });
-        }
-
-        function getMarkersFromDB(callback, map) {
-            $.ajax({
-                type: 'GET',
-                url: '/MapPoint/all.json',
-                success: function(data) {
-                    console.log('getMarkersFromDB() returns ' + data.points.length + ' points');
-                    callback(map, data.points);
-                }
-            })
-        }
+        myMap('map', options);
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initialize"></script>
 </html>
