@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+These are the steps to get the app up and running:
 
-Things you may want to cover:
+* Install Ruby and SQLite3
 
-* Ruby version
+* Start the server by running:
+ruby bin\rails server
 
-* System dependencies
+*  To see your application in action, open a browser window and navigate to http://localhost:3000
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
